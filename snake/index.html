@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <a class="back-link" href="../">&larr; All games</a>
+  <h1>Snake</h1>
+  <p class="sub">Eat the pink dots to grow. Don't hit the wall or yourself. Use the arrow keys, WASD, or swipe.</p>
+
+  <div class="stats">
+    <div class="stat"><b id="score">0</b><span>Score</span></div>
+    <div class="stat"><b id="best">0</b><span>Best</span></div>
+  </div>
+  <p class="status" id="status" aria-live="polite">Press Start or an arrow key.</p>
+
+  <canvas id="board" width="400" height="400" aria-label="Snake game board"></canvas>
+
+  <div class="dpad" aria-label="Direction buttons">
+    <button class="pill dir up" data-dx="0" data-dy="-1" aria-label="Up">&uarr;</button>
+    <button class="pill dir left" data-dx="-1" data-dy="0" aria-label="Left">&larr;</button>
+    <button class="pill dir down" data-dx="0" data-dy="1" aria-label="Down">&darr;</button>
+    <button class="pill dir right" data-dx="1" data-dy="0" aria-label="Right">&rarr;</button>
+  </div>
+
+  <div class="actions">
+    <button class="pill primary" id="start">Start</button>
+    <button class="pill" id="mute" aria-pressed="false">🔊 Sound on</button>
+  </div>
+</main>
+<script src="script.js" defer></script>
+</body>
+</html>
