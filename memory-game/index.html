@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memory Match</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <a class="back" href="../">&larr; All games</a>
+  <h1>Memory Match</h1>
+  <p class="sub">Flip two cards at a time. Find every pair in as few moves as you can.</p>
+
+  <div class="bar">
+    <div class="stats">
+      <div class="stat"><b id="moves">0</b><span>Moves</span></div>
+      <div class="stat"><b id="time">0:00</b><span>Time</span></div>
+      <div class="stat"><b id="best">-</b><span>Best moves</span></div>
+    </div>
+    <div class="levels" role="group" aria-label="Difficulty">
+      <button class="pill" data-level="easy" aria-pressed="false">Easy</button>
+      <button class="pill" data-level="medium" aria-pressed="true">Medium</button>
+      <button class="pill" data-level="hard" aria-pressed="false">Hard</button>
+    </div>
+  </div>
+
+  <div class="board" id="board"></div>
+  <div class="actions">
+    <button class="pill primary" id="restart">New game</button>
+    <button class="pill" id="mute" aria-pressed="false">🔊 Sound on</button>
+  </div>
+</main>
+
+<dialog id="win">
+  <h2>You won!</h2>
+  <p id="winText"></p>
+  <button class="pill primary" id="again">Play again</button>
+</dialog>
+
+<script src="script.js" defer></script>
+</body>
+</html>
