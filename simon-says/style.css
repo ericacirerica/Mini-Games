@@ -1,0 +1,47 @@
+:root {
+    --bg: #fde7ec;
+    --ink: #3a4a2c;
+    --face: #fffaf7;
+    --pink: #f28bab;
+    --font: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh; background: var(--bg); color: var(--ink);
+    font-family: var(--font); display: flex; justify-content: center;
+    padding: 24px 16px 40px;
+  }
+  main { width: 100%; max-width: 420px; }
+  .back { display: inline-block; margin-bottom: 12px; color: var(--ink); font-weight: 500; }
+  h1 { font-size: 2.4rem; font-weight: 800; margin: 0 0 4px; letter-spacing: -0.02em; }
+  .sub { margin: 0 0 20px; opacity: 0.75; }
+  
+  .stats { display: flex; gap: 24px; margin-bottom: 8px; }
+  .stat b { display: block; font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 0.85rem; opacity: 0.75; }
+  .status { min-height: 1.6em; font-weight: 500; margin: 0 0 14px; }
+  
+  .pads { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .pad {
+    aspect-ratio: 1; border: 0; border-radius: 22px; cursor: pointer;
+    background: var(--c); opacity: 0.55;
+    transition: opacity 0.1s, transform 0.1s;
+  }
+  .pad[data-i="0"] { --c: #f28bab; }
+  .pad[data-i="1"] { --c: #8aa56a; }
+  .pad[data-i="2"] { --c: #f6dc8c; }
+  .pad[data-i="3"] { --c: #c9b6e4; }
+  .pad.lit { opacity: 1; transform: scale(1.04); box-shadow: 0 0 0 4px var(--face), 0 0 22px var(--c); }
+  .pad:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  button.pill {
+    font: inherit; font-weight: 500; color: var(--ink);
+    background: transparent; border: 2px solid var(--ink);
+    padding: 6px 14px; border-radius: 999px; cursor: pointer;
+  }
+  button.pill[aria-pressed="true"] { background: var(--ink); color: var(--face); }
+  button.primary { background: var(--pink); border-color: var(--pink); font-weight: 800; }
+  
+  @media (prefers-reduced-motion: reduce) { .pad { transition: none; } }
