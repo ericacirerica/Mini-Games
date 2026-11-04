@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini Games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Mini Games</h1>
+  <p class="sub">Pick a game and play. All of them are one-player.</p>
+
+  <div class="grid">
+    <!-- A game that is ready: an <a> link. href has NO leading slash. -->
+    <a class="card" href="memory-game/">
+      <span class="emoji">🃏</span>
+      <h2>Memory Match</h2>
+      <p>Flip cards and find every pair.</p>
+      <span class="tag">Play</span>
+    </a>
+
+    <a class="card" href="simon-says/">
+      <span class="emoji">🎵</span>
+      <h2>Simon Says</h2>
+      <p>Watch the pattern and repeat it.</p>
+      <span class="tag">Play</span>
+    </a>
+
+    <!-- Games not built yet: a <div> with class "soon". When a game is ready,
+         change <div> to <a href="folder-name/"> and remove "soon". -->
+    <div class="card soon">
+      <span class="emoji">🐍</span>
+      <h2>Snake</h2>
+      <p>Eat, grow, and don't hit the wall.</p>
+      <span class="tag">Coming soon</span>
+    </div>
+
+    <div class="card soon">
+      <span class="emoji">🔨</span>
+      <h2>Whack-a-Mole</h2>
+      <p>Tap the moles before they hide.</p>
+      <span class="tag">Coming soon</span>
+    </div>
+
+    <div class="card soon">
+      <span class="emoji">🔤</span>
+      <h2>Hangman</h2>
+      <p>Guess the word one letter at a time.</p>
+      <span class="tag">Coming soon</span>
+    </div>
+  </div>
+</main>
+</body>
+</html>
