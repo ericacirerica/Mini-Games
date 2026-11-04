@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simon Says</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <a class="back" href="../">&larr; All games</a>
+  <h1>Simon Says</h1>
+  <p class="sub">Watch the pattern, then repeat it. Every round adds one more step.</p>
+
+  <div class="stats">
+    <div class="stat"><b id="score">0</b><span>Rounds done</span></div>
+    <div class="stat"><b id="best">0</b><span>Best</span></div>
+  </div>
+  <p class="status" id="status" aria-live="polite">Press Start to play.</p>
+
+  <div class="pads">
+    <button class="pad" data-i="0" aria-label="Pink pad"></button>
+    <button class="pad" data-i="1" aria-label="Green pad"></button>
+    <button class="pad" data-i="2" aria-label="Yellow pad"></button>
+    <button class="pad" data-i="3" aria-label="Purple pad"></button>
+  </div>
+
+  <div class="actions">
+    <button class="pill primary" id="start">Start</button>
+    <button class="pill" id="mute" aria-pressed="false">🔊 Sound on</button>
+  </div>
+</main>
+<script src="script.js" defer></script>
+</body>
+</html>
