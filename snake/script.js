@@ -55,6 +55,34 @@ const sounds = {
   win()  { [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.12, 0.25, "triangle", 0.25)); }
 };
 
+// 4b. Result popup, like the one in Memory Match. It is built here so this game stays self-contained.
+const popupStyle = document.createElement("style");
+popupStyle.textContent =
+  "dialog.result { border: 0; border-radius: 18px; padding: 28px; background: var(--face); color: var(--ink); font-family: var(--font); max-width: 320px; text-align: center; }" +
+  "dialog.result::backdrop { background: rgba(58, 74, 44, 0.5); }" +
+  "dialog.result h2 { margin: 0 0 8px; font-size: 1.8rem; }" +
+  "dialog.result p { margin: 0 0 18px; }";
+document.head.appendChild(popupStyle);
+
+const popup = document.createElement("dialog");
+popup.className = "result";
+const popupTitle = document.createElement("h2");
+const popupText = document.createElement("p");
+const popupBtn = document.createElement("button");
+popupBtn.className = "pill primary";
+popupBtn.textContent = "Play again";
+popup.append(popupTitle, popupText, popupBtn);
+document.body.appendChild(popup);
+popupBtn.addEventListener("click", () => { popup.close(); startGame(); });
+
+// Show the popup after a short pause. stillOver() makes sure you haven't
+// already started a new game in the meantime.
+function showResult(title, text, stillOver) {
+  popupTitle.textContent = title;
+  popupText.textContent = text;
+  setTimeout(() => { if (stillOver() && !popup.open) popup.showModal(); }, 400);
+}
+
 // 5. Helpers.
 function getBest() {
   try { return Number(localStorage.getItem("snake-best")) || 0; } catch (e) { return 0; }
@@ -159,14 +187,15 @@ function endGame(won) {
   running = false;
   over = true;
   clearTimeout(timerId);
-  let msg = won ? "You filled the whole board! " : "Game over. ";
-  msg += "Score: " + score + ".";
+  let msg = "Score: " + score + ".";
   if (score > getBest()) {
     saveBest(score);
     msg += " New best!";
   }
   bestEl.textContent = getBest();
-  setStatus(msg);
+  const prefix = won ? "You filled the whole board! " : "";
+  setStatus((won ? prefix : "Game over. ") + msg);
+  showResult(won ? "You won!" : "Game over", prefix + msg, () => over);
   startBtn.textContent = "Play again";
   if (won) sounds.win(); else sounds.die();
 }

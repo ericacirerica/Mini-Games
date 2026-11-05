@@ -10,12 +10,12 @@ Made by [Erica](https://github.com/ericacirerica)
 
 ## The games
 
-| Game                | How to play                                                                                                           |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| 🃏 **Memory Match** | Flip two cards at a time and find every pair. Choose Easy, Medium or Hard, and try to beat your best number of moves. |
-| 🎵 **Simon Says**   | Watch the pattern of lights and sounds, then repeat it. Every round adds one more step.                               |
-| 🐍 **Snake**        | Eat the pink dots to grow, and don't hit the wall or yourself. Use the arrow keys, WASD, or swipe on a phone.         |
-| 🔨 **Whack-a-Mole** | Tap each mole before it hides. You have 30 seconds, and the moles get faster. On a keyboard, press 1 to 9.            |
+| Game                | How to play                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| 🃏 **Memory Match** | Flip two cards at a time and find every pair. Choose Easy, Medium or Hard, and try to beat your best number of moves.               |
+| 🎵 **Simon Says**   | Watch the pattern of lights and sounds, then repeat it. Every round adds one more step.                                             |
+| 🐍 **Snake**        | Eat the pink dots to grow, and don't hit the wall or yourself. Use the arrow keys, WASD, or swipe on a phone.                       |
+| 🔨 **Whack-a-Mole** | Tap each mole before it hides. You have 45 seconds, two moles can pop up at once, and they get faster. On a keyboard, press 1 to 9. |
 
 More games are on the way. 🍵
 
