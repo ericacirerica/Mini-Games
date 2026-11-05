@@ -1,6 +1,6 @@
 // saves the games on the phone so they work offline.
 // new game=change the version number (add its files to PRECACHE).
-const CACHE = "mini-games-v2";
+const CACHE = "mini-games-v4";
 const PRECACHE = [
   "./", "index.html", "style.css", "manifest.webmanifest",
   "memory-game/", "memory-game/index.html", "memory-game/style.css", "memory-game/script.js",

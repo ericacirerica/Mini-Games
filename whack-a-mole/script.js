@@ -1,5 +1,6 @@
 // 1. Settings.
-const DURATION = 30; // seconds per round
+const DURATION = 45;      // seconds per round
+const MAX_AT_ONCE = 2;    // how many moles can be up at the same time
 
 // 2. State.
 let score = 0;
@@ -7,7 +8,8 @@ let timeLeft = DURATION;
 let running = false;
 let runId = 0;        // changes every game, so old timers stop themselves
 let lastHole = -1;    // so the mole doesn't pop up in the same hole twice in a row
-let moleTimer = null; // the timer that shows and hides moles
+let spawnTimer = null; // decides when the next mole pops up
+const hideTimers = []; // one hide-timer for each hole
 let tickTimer = null; // the one-second countdown
 let soundOn = true;
 try { soundOn = localStorage.getItem("whack-sound") !== "off"; } catch (e) {}
@@ -58,6 +60,34 @@ const sounds = {
   best()  { [1047, 1319, 1568, 2093].forEach((f, i) => tone(f, 0.55 + i * 0.1, 0.2, "sine", 0.16)); }
 };
 
+// 4b. Result popup, like the one in Memory Match. It is built here so this game stays self-contained.
+const popupStyle = document.createElement("style");
+popupStyle.textContent =
+  "dialog.result { border: 0; border-radius: 18px; padding: 28px; background: var(--face); color: var(--ink); font-family: var(--font); max-width: 320px; text-align: center; }" +
+  "dialog.result::backdrop { background: rgba(58, 74, 44, 0.5); }" +
+  "dialog.result h2 { margin: 0 0 8px; font-size: 1.8rem; }" +
+  "dialog.result p { margin: 0 0 18px; }";
+document.head.appendChild(popupStyle);
+
+const popup = document.createElement("dialog");
+popup.className = "result";
+const popupTitle = document.createElement("h2");
+const popupText = document.createElement("p");
+const popupBtn = document.createElement("button");
+popupBtn.className = "pill primary";
+popupBtn.textContent = "Play again";
+popup.append(popupTitle, popupText, popupBtn);
+document.body.appendChild(popup);
+popupBtn.addEventListener("click", () => { popup.close(); startGame(); });
+
+// Show the popup after a short pause. stillOver() makes sure you haven't
+// already started a new game in the meantime.
+function showResult(title, text, stillOver) {
+  popupTitle.textContent = title;
+  popupText.textContent = text;
+  setTimeout(() => { if (stillOver() && !popup.open) popup.showModal(); }, 400);
+}
+
 // 5. Helpers.
 function getBest() {
   try { return Number(localStorage.getItem("whack-best")) || 0; } catch (e) { return 0; }
@@ -66,13 +96,16 @@ function saveBest(n) {
   try { localStorage.setItem("whack-best", String(n)); } catch (e) {}
 }
 function setStatus(text) { statusEl.textContent = text; }
-function hide(i) { holes[i].classList.remove("up", "hit"); }
+function hide(i) {
+  clearTimeout(hideTimers[i]);
+  holes[i].classList.remove("up", "hit");
+}
 function hideAll() { holes.forEach((_, i) => hide(i)); }
 
 // 6. The game.
 function startGame() {
   runId++;
-  clearTimeout(moleTimer);
+  clearTimeout(spawnTimer);
   clearInterval(tickTimer);
   hideAll();
   score = 0;
@@ -85,7 +118,7 @@ function startGame() {
   startBtn.textContent = "Restart";
   tickTimer = setInterval(tick, 1000);
   const id = runId;
-  moleTimer = setTimeout(() => popMole(id), 600);
+  spawnTimer = setTimeout(() => spawnLoop(id), 600);
 }
 
 function tick() {
@@ -94,21 +127,33 @@ function tick() {
   if (timeLeft <= 0) endGame();
 }
 
-// Show a mole in a random hole. The longer you play, the faster they get.
-function popMole(id) {
+// Every so often, pop up a new mole if fewer than MAX_AT_ONCE are showing.
+// The longer you play, the faster they come and the less time they stay.
+function spawnLoop(id) {
   if (!running || id !== runId) return;
-  let i;
-  do { i = Math.floor(Math.random() * holes.length); } while (i === lastHole);
+  const elapsed = DURATION - timeLeft;
+
+  const showing = holes.filter((h) => h.classList.contains("up")).length;
+  if (showing < MAX_AT_ONCE) {
+    // Pick a random hole that is empty (and not the one used last).
+    const free = holes
+      .map((_, i) => i)
+      .filter((i) => !holes[i].classList.contains("up") && i !== lastHole);
+    if (free.length > 0) {
+      showMole(free[Math.floor(Math.random() * free.length)], elapsed);
+    }
+  }
+
+  const delay = Math.max(300, 750 - elapsed * 8) + Math.random() * 300;
+  spawnTimer = setTimeout(() => spawnLoop(id), delay);
+}
+
+function showMole(i, elapsed) {
   lastHole = i;
   holes[i].classList.add("up");
   sounds.pop();
-
-  const elapsed = DURATION - timeLeft;
-  const stay = Math.max(420, 950 - elapsed * 18); // milliseconds the mole stays up
-  moleTimer = setTimeout(() => {
-    hide(i);
-    moleTimer = setTimeout(() => popMole(id), 250 + Math.random() * 300);
-  }, stay);
+  const stay = Math.max(550, 1200 - elapsed * 14); // milliseconds the mole stays up
+  hideTimers[i] = setTimeout(() => hide(i), stay);
 }
 
 function whack(i) {
@@ -119,13 +164,9 @@ function whack(i) {
     score++;
     scoreEl.textContent = String(score);
     sounds.whack();
-    // Let the mole show it got hit, then bring the next one.
-    clearTimeout(moleTimer);
-    const id = runId;
-    moleTimer = setTimeout(() => {
-      hide(i);
-      moleTimer = setTimeout(() => popMole(id), 250);
-    }, 220);
+    // Let the mole show it got hit, then hide it.
+    clearTimeout(hideTimers[i]);
+    hideTimers[i] = setTimeout(() => hide(i), 220);
   } else {
     sounds.miss();
   }
@@ -134,19 +175,20 @@ function whack(i) {
 function endGame() {
   running = false;
   runId++; // cancels any timers that are still waiting
-  clearTimeout(moleTimer);
+  clearTimeout(spawnTimer);
   clearInterval(tickTimer);
   hideAll();
   timeEl.textContent = "0";
   sounds.end();
-  let msg = "Time's up! You whacked " + score + " mole" + (score === 1 ? "" : "s") + ".";
+  let msg = "You whacked " + score + " mole" + (score === 1 ? "" : "s") + ".";
   if (score > getBest()) {
     saveBest(score);
     msg += " New best!";
     sounds.best();
   }
   bestEl.textContent = String(getBest());
-  setStatus(msg);
+  setStatus("Time's up! " + msg);
+  showResult("Time's up!", msg, () => !running);
   startBtn.textContent = "Play again";
 }
 
