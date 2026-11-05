@@ -8,6 +8,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#fde7ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mini Games">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<link rel="icon" href="../icons/icon-192.png">
 </head>
 <body>
 <main>
@@ -34,5 +40,6 @@
   </div>
 </main>
 <script src="script.js" defer></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("../sw.js"); }</script>
 </body>
 </html>
