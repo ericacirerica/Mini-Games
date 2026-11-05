@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Whack-a-Mole</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#fde7ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mini Games">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<link rel="icon" href="../icons/icon-192.png">
+</head>
+<body>
+<main>
+  <a class="back-link" href="../">&larr; All games</a>
+  <h1>Whack-a-Mole</h1>
+  <p class="sub">Tap each mole before it hides. You have 30 seconds. On a keyboard, press 1 to 9.</p>
+
+  <div class="stats">
+    <div class="stat"><b id="score">0</b><span>Score</span></div>
+    <div class="stat"><b id="time">30</b><span>Seconds left</span></div>
+    <div class="stat"><b id="best">0</b><span>Best</span></div>
+  </div>
+  <p class="status" id="status" aria-live="polite">Press Start to play.</p>
+
+  <div class="board" id="board">
+    <button class="hole" aria-label="Hole 1"><span class="mole">🐹</span></button>
+    <button class="hole" aria-label="Hole 2"><span class="mole">🐹</span></button>
+    <button class="hole" aria-label="Hole 3"><span class="mole">🐹</span></button>
+    <button class="hole" aria-label="Hole 4"><span class="mole">🐹</span></button>
+    <button class="hole" aria-label="Hole 5"><span class="mole">🐹</span></button>
+    <button class="hole" aria-label="Hole 6"><span class="mole">🐹</span></button>
+    <button class="hole" aria-label="Hole 7"><span class="mole">🐹</span></button>
+    <button class="hole" aria-label="Hole 8"><span class="mole">🐹</span></button>
+    <button class="hole" aria-label="Hole 9"><span class="mole">🐹</span></button>
+  </div>
+
+  <div class="actions">
+    <button class="pill primary" id="start">Start</button>
+    <button class="pill" id="mute" aria-pressed="false">🔊 Sound on</button>
+  </div>
+</main>
+<script src="script.js" defer></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("../sw.js"); }</script>
+</body>
+</html>
