@@ -44,7 +44,10 @@
 <dialog id="win">
   <h2>You won!</h2>
   <p id="winText"></p>
-  <button class="pill primary" id="again">Play again</button>
+  <div class="dialog-actions">
+    <button class="pill primary" id="again">Play again</button>
+    <button class="pill secondary" id="back" onclick="location.href='../'">Back to all games</button>
+  </div>
 </dialog>
 
 <script src="script.js" defer></script>

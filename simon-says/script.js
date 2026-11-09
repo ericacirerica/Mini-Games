@@ -54,7 +54,10 @@ popupStyle.textContent =
   "dialog.result { border: 0; border-radius: 18px; padding: 28px; background: var(--face); color: var(--ink); font-family: var(--font); max-width: 320px; text-align: center; }" +
   "dialog.result::backdrop { background: rgba(58, 74, 44, 0.5); }" +
   "dialog.result h2 { margin: 0 0 8px; font-size: 1.8rem; }" +
-  "dialog.result p { margin: 0 0 18px; }";
+  "dialog.result p { margin: 0 0 18px; }" +
+  "dialog.result .dialog-actions { display: flex; flex-direction: column; gap: 10px; }" +
+  "dialog.result .dialog-actions button { width: 100%; }" +
+  "dialog.result button.secondary { background: var(--matcha, #8aa56a); border-color: var(--matcha, #8aa56a); font-weight: 800; }";
 document.head.appendChild(popupStyle);
 
 const popup = document.createElement("dialog");
@@ -64,9 +67,16 @@ const popupText = document.createElement("p");
 const popupBtn = document.createElement("button");
 popupBtn.className = "pill primary";
 popupBtn.textContent = "Play again";
-popup.append(popupTitle, popupText, popupBtn);
+const backBtn = document.createElement("button");
+backBtn.className = "pill secondary";
+backBtn.textContent = "Back to all games";
+const popupActions = document.createElement("div");
+popupActions.className = "dialog-actions";
+popupActions.append(popupBtn, backBtn);
+popup.append(popupTitle, popupText, popupActions);
 document.body.appendChild(popup);
 popupBtn.addEventListener("click", () => { popup.close(); startGame(); });
+backBtn.addEventListener("click", () => { location.href = "../"; });
 
 // Show the popup after a short pause. stillOver() makes sure you haven't
 // already started a new game in the meantime.

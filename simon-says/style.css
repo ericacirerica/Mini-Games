@@ -4,6 +4,7 @@
     --face: #fffaf7;
     --pink: #f28bab;
     --font: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --back: #8aa56a;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
